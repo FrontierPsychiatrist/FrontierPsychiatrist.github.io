@@ -1,0 +1,30 @@
+<div class="navbar navbar-inverse">
+  <div class="navbar-inner">
+    <a class="brand" href="/">Home</a>
+    <ul class="nav">
+      <li class="{% if page.url == "/about.html" %}active{% endif %}">
+	<a href="/about.html">about</a>
+      </li>
+      <li class="dropdown {% if page.url == "/projects.html" %}active{% endif %}">
+	<a class="dropdown-toggle" href="#" data-toggle="dropdown">projects <b class="caret"></b></a>
+	<ul class="dropdown-menu">
+	  <li>
+	    <a href="/projects.html#node-spotify">node-spotify</a>
+	  </li>
+	  <li>
+	    <a href="/projects.html#spring-oauth-example">spring-oauth-example</a>
+	  </li>
+	</ul>
+      </li>
+      <li class="{% if page.url == "/music.html" %}active{% endif %}">
+	<a href="/music.html">music</a>
+      </li>
+      <li>
+	<a href="/blog/">blog</a>
+      </li>
+      <li>
+	<a href="http://berlinpixels.com" target="_blank">berlinpixels</a>
+      </li>
+    </ul>
+  </div>
+</div>

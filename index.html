@@ -2,22 +2,18 @@
 layout: default
 ---
 
-<div class="home">
-
-  <h1 class="page-heading">Posts</h1>
-
-  <ul class="post-list">
-    {% for post in site.posts %}
-      <li>
-        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
-
-        <h2>
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        </h2>
-      </li>
-    {% endfor %}
-  </ul>
-
-  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
+<div class="hero-unit">
+  <h1>Welcome</h1>
+  <p>This is my personal homepage. You can find about</p>
+  <div class="btn-group">
+    <a class="btn btn-info" href="about.html">myself</a>
+    <a class="btn btn-info" href="projects.html">my projects</a>
+    <a class="btn btn-info" href="music.html">my music</a>
+  </div>
+  <p>Apart from that you can</p>
+  <div class="btn-group">
+    <a class="btn btn-info" href="/blog">read my blog</a>
+    <a class="btn btn-info" href="https://www.github.com/FrontierPsychiatrist">visit my Github page</a>
+  </div>
 
 </div>

@@ -1,0 +1,141 @@
+---
+---
+$textColor: #222;
+$headingColor: #333373;
+
+* {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+body, .body {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-menu {
+  order: -1;
+  .menu-image {
+    width: 60%;
+    border-radius: 50%;
+    position: relative;
+    left: 10%;
+  }
+}
+
+.content {
+  max-width: 70ch;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: $headingColor;
+  a {
+    color: $headingColor;
+  }
+  line-height: 110%;
+}
+
+p {
+  line-height: 150%;
+  color: $textColor;
+}
+
+.main-menu {
+  a.active {
+    background-color: #ceeaff;
+  }
+
+  a {
+    text-decoration: none;
+    border: 1px solid #aaa;
+    border-radius: 2px;
+    padding: 3px;
+
+    &:visited {
+      color: darken($textColor, 10%);
+    }
+  }
+}
+
+@media(max-width: 768px) {
+  .mobile-hidden {
+    display: none !important;
+  }
+
+  /* make menu horizontal on mobile */
+  .main-menu ul {
+    display: inline;
+    padding-left: 0;
+    li {
+      display: inline;
+    }
+  }
+}
+
+@media(min-width: 768px) {
+  .body {
+    flex-direction: row;
+    flex: 1;
+  }
+
+  .content {
+    flex: 1;
+  }
+
+  .main-menu {
+    flex: 0 0 17em;
+  }
+
+  /* Tree display to use with ul */
+  $treeIndentation: 1em;
+
+  .tree {
+    margin-left: $treeIndentation;
+    padding: 0;
+    list-style: none;
+    position: relative;
+    &:before {
+      content: "";
+      display: block;
+      width: 0;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      border-left: 1px solid;
+    }
+  }
+
+  .tree ul {
+    @extend .tree;
+    margin-left: $treeIndentation/2;
+  }  
+
+  .tree li {
+    $lineHeight: 2.1em;
+    margin:0;
+    padding: 0 .8em;
+    line-height: $lineHeight;
+    position: relative;
+    &:before {
+      content: "";
+      display: block;
+      width: 10px; /* same with indentation */
+      height: 0;
+      border-top: 1px solid;
+      margin-top: -1px; /* border top width */
+      position: absolute;
+      top: $lineHeight/2;
+      left: 0;
+    }
+
+
+    &:last-child {
+      &:before {
+	background: white; /* same with body background, removes largest line left */
+	height: auto;
+	top: $lineHeight/2;
+	bottom: 0;
+      }
+    }
+  }
+}

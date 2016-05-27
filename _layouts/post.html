@@ -8,22 +8,27 @@
     <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}"/>
     <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}">
 
+    <link rel="stylesheet" href="{{ "/css/style.css" | prepend: site.baseurl }}" media="screen" type="text/css"/>
     <link rel="stylesheet" href="{{ "/css/syntax.css" | prepend: site.baseurl }}" media="screen" type="text/css"/>
     <title>{{page.title}}</title>
   </head>
 
   <body>
-  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+    <div class="body">
+      <main class="content">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+          <header class="post-header">
+	    <h1 class="post-title" itemprop="name headline">{{ page.title }}</h1>
+            <p class="post-meta"><time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%-d %B %Y" }}</time>{% if page.author %} • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{ page.author }}</span></span>{% endif %}</p>
+          </header>
 
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">{{ page.title }}</h1>
-      <p class="post-meta"><time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%-d %B %Y" }}</time>{% if page.author %} • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{ page.author }}</span></span>{% endif %}</p>
-    </header>
+          <div class="post-content" itemprop="articleBody">
+	    {{ content }}
+          </div>
 
-    <div class="post-content" itemprop="articleBody">
-      {{ content }}
+        </article>
+      </main>
+      {% include navbar.html %}
     </div>
-
-  </article>
   </body>
 </html>

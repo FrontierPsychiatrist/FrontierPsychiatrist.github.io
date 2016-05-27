@@ -1,30 +1,30 @@
-<div class="navbar navbar-inverse">
-  <div class="navbar-inner">
-    <a class="brand" href="/">Home</a>
-    <ul class="nav">
-      <li class="{% if page.url == "/about.html" %}active{% endif %}">
-	<a href="/about.html">about</a>
-      </li>
-      <li class="dropdown {% if page.url == "/projects.html" %}active{% endif %}">
-	<a class="dropdown-toggle" href="#" data-toggle="dropdown">projects <b class="caret"></b></a>
-	<ul class="dropdown-menu">
-	  <li>
-	    <a href="/projects.html#node-spotify">node-spotify</a>
-	  </li>
-	  <li>
-	    <a href="/projects.html#spring-oauth-example">spring-oauth-example</a>
-	  </li>
-	</ul>
-      </li>
-      <li class="{% if page.url == "/music.html" %}active{% endif %}">
-	<a href="/music.html">music</a>
-      </li>
-      <li>
-	<a href="/blog/">blog</a>
-      </li>
-      <li>
-	<a href="http://berlinpixels.com" target="_blank">berlinpixels</a>
-      </li>
-    </ul>
-  </div>
-</div>
+<nav class="main-menu">
+  <img src="/img/moritz.schulze.small.jpg" class="menu-image mobile-hidden" alt="Moritz Schulze"/>
+  <ul class="tree">  
+    <li>
+      <a href="/" class="{% if page.url == "/" %}active{% endif %}">home</a>
+      <ul>
+        <li>
+          <a class="{% if page.url == "/projects.html" %}active{% endif %}" href="/projects.html">projects</a>
+  	  <ul class="mobile-hidden">
+            <li>
+              <a href="/projects.html#node-spotify">node-spotify</a>
+	    </li>
+            <li>
+              <a href="/projects.html#spring-oauth-example">spring-oauth-example</a>
+            </li>
+            </ul>
+        </li>
+        <li>
+          <a class="{% if page.url == "/music.html" %}active{% endif %}" href="/music.html">music</a>
+        </li>
+        <li>
+          <a class="{% if page.url contains "/blog/" %}active{% endif %}" href="/blog/">blog</a>
+        </li>
+        <li class="mobile-hidden">
+          <a href="http://berlinpixels.com" target="_blank">berlinpixels</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>

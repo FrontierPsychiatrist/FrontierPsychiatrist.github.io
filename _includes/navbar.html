@@ -5,7 +5,7 @@
       <a href="/" class="{% if page.url == "/" %}active{% endif %}">home</a>
       <ul>
         <li>
-          <a class="{% if page.url == "/projects.html" %}active{% endif %}" href="/projects.html">projects</a>
+          <a class="{% if page.url == "/projects" %}active{% endif %}" href="/projects.html">projects</a>
   	  <ul class="mobile-hidden">
             <li>
               <a href="/projects.html#node-spotify">node-spotify</a>
@@ -16,7 +16,7 @@
             </ul>
         </li>
         <li>
-          <a class="{% if page.url == "/music.html" %}active{% endif %}" href="/music.html">music</a>
+          <a class="{% if page.url == "/music" %}active{% endif %}" href="/music.html">music</a>
         </li>
         <li>
           <a class="{% if page.url contains "/blog/" %}active{% endif %}" href="/blog/">blog</a>

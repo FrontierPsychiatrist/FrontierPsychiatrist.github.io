@@ -50,7 +50,7 @@ But this comes with the cost of added complexity in the C++ code. Also if the us
 
 I have come to the conclusion that this is actually more counterintuitive than just attaching the callbacks to the JavaScript object and providing it as the userdata in the callback. So I will change the node-spotify implementation to go that way.
 
-This will put a little more work to users of node-spotify: You have to track your playlists more carefully. vvvIf a playlists objects goes out of scope it is advisefully to unregister all callbacks, otherwise you have to wait for the garbage collector to kick in and the callbacks to be unregistered in the destructor.
+This will put a little more work to users of node-spotify: You have to track your playlists more carefully. If a playlists objects goes out of scope it is advisefully to unregister all callbacks, otherwise you have to wait for the garbage collector to kick in and the callbacks to be unregistered in the destructor.
     Another nice thing that I can do better with this approach is to register the callbacks in libspotify only when the user registers them in node-spotify. Currently all playlist callbacks will be registered for every playlist and it will be checked in the callback function itself if the user had interest in this specific callback.
 
 ## Org Mode

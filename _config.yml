@@ -17,3 +17,4 @@ github_username:  FrontierPsychiatrist
 # Build settings
 markdown: kramdown
 permalink: /blog/:title
+include: [".well-known"]

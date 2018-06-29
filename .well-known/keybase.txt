@@ -1,0 +1,57 @@
+==================================================================
+https://keybase.io/frontierpsycho
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://frontierpsychiatrist.de
+  * I am frontierpsycho (https://keybase.io/frontierpsycho) on keybase.
+  * I have a public key ASBmoMFhLHdkmPWwx_jWRMXk9557wYXaLegWpY4V6DhMdgo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "012066a0c1612c776498f5b0c7f8d644c5e4f79e7bc185da2de816a58e15e8384c760a",
+      "host": "keybase.io",
+      "kid": "012066a0c1612c776498f5b0c7f8d644c5e4f79e7bc185da2de816a58e15e8384c760a",
+      "uid": "da5bb5ca6bd079994e9578ad0e9e9f19",
+      "username": "frontierpsycho"
+    },
+    "merkle_root": {
+      "ctime": 1530259626,
+      "hash": "9499bd1574b58d3d3d347c9178c493b1b7873ca23c0f8f75c2e7ddd7659855d62d9518aa9b82c32b5b017b579f9e8317611dd796ba9692a244d992d72c444fef",
+      "hash_meta": "c8928fafa709e3f02700e465c8271f9b743d7a726cf8de60e02f05ce5426bfdd",
+      "seqno": 3172543
+    },
+    "service": {
+      "entropy": "nLhlMZFyfE7cvWvryARU/5PL",
+      "hostname": "frontierpsychiatrist.de",
+      "protocol": "http:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "2.3.0"
+  },
+  "ctime": 1530259709,
+  "expire_in": 504576000,
+  "prev": "13b71d8b422d070f80ce5e191baca858ecb3533e72f6d704f4831ff080d7d348",
+  "seqno": 7,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgZqDBYSx3ZJj1sMf41kTF5Peee8GF2i3oFqWOFeg4THYKp3BheWxvYWTESpcCB8QgE7cdi0ItBw+Azl4ZG6yoWOyzUz5y9tcE9IMf8IDX00jEIGei75uG3XdQnKxxn4hzYqOUf+ONhBzuTPg10LocFHfnAgHCo3NpZ8RAZASSgpHt2v8nvhnYVWcoatNXw7XVcXBTcaqbkSipIu65gFmR5l0LWstS+f0vrYDumNNT+er9nT69JevGtFQ7BahzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIM7SKasNDk8hPl15Mlt0NIndnsDWlGqgpw4ZkilGQLB7o3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/frontierpsycho
+
+==================================================================
+

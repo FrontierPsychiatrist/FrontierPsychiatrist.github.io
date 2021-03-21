@@ -2,6 +2,7 @@ baseURL = "http://frontierpsychiatrist.de"
 languageCode = "en-us"
 title = "FrontierPsychiatrist"
 theme = "cactus"
+publishDir = "docs"
 
 [[menu.main]]
   name = "Home"

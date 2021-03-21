@@ -2,48 +2,48 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://frontierpsychiatrist.de/</loc>
+    <loc>https://frontierpsychiatrist.de/</loc>
     <lastmod>2017-04-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url><url>
-    <loc>http://frontierpsychiatrist.de/posts/2017-04-26-no-more-node-spotify/</loc>
+    <loc>https://frontierpsychiatrist.de/posts/2017-04-26-no-more-node-spotify/</loc>
     <lastmod>2017-04-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://frontierpsychiatrist.de/posts/</loc>
+    <loc>https://frontierpsychiatrist.de/posts/</loc>
     <lastmod>2017-04-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://frontierpsychiatrist.de/posts/2016-06-11-node-spotify-lives/</loc>
+    <loc>https://frontierpsychiatrist.de/posts/2016-06-11-node-spotify-lives/</loc>
     <lastmod>2016-06-11T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://frontierpsychiatrist.de/posts/2016-05-02-migrating-to-jekyll/</loc>
+    <loc>https://frontierpsychiatrist.de/posts/2016-05-02-migrating-to-jekyll/</loc>
     <lastmod>2016-05-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://frontierpsychiatrist.de/posts/2014-07-21-syncthing-berlinpixels/</loc>
+    <loc>https://frontierpsychiatrist.de/posts/2014-07-21-syncthing-berlinpixels/</loc>
     <lastmod>2014-07-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://frontierpsychiatrist.de/posts/2014-06-07-qtcreator-progress-with-audio/</loc>
+    <loc>https://frontierpsychiatrist.de/posts/2014-06-07-qtcreator-progress-with-audio/</loc>
     <lastmod>2014-06-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://frontierpsychiatrist.de/posts/2014-06-02-audio-in-node-spotify/</loc>
+    <loc>https://frontierpsychiatrist.de/posts/2014-06-02-audio-in-node-spotify/</loc>
     <lastmod>2014-06-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://frontierpsychiatrist.de/posts/2014-05-24-turning-50/</loc>
+    <loc>https://frontierpsychiatrist.de/posts/2014-05-24-turning-50/</loc>
     <lastmod>2014-05-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://frontierpsychiatrist.de/posts/2014-05-17-aws-summit-node-spotify/</loc>
+    <loc>https://frontierpsychiatrist.de/posts/2014-05-17-aws-summit-node-spotify/</loc>
     <lastmod>2014-05-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://frontierpsychiatrist.de/posts/2014-05-10-callbacks-org-mode/</loc>
+    <loc>https://frontierpsychiatrist.de/posts/2014-05-10-callbacks-org-mode/</loc>
     <lastmod>2014-05-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://frontierpsychiatrist.de/about_me/</loc>
+    <loc>https://frontierpsychiatrist.de/about_me/</loc>
     <priority>0</priority>
   </url><url>
-    <loc>http://frontierpsychiatrist.de/music/</loc>
+    <loc>https://frontierpsychiatrist.de/music/</loc>
     <priority>0</priority>
   </url><url>
-    <loc>http://frontierpsychiatrist.de/categories/</loc>
+    <loc>https://frontierpsychiatrist.de/categories/</loc>
   </url><url>
-    <loc>http://frontierpsychiatrist.de/tags/</loc>
+    <loc>https://frontierpsychiatrist.de/tags/</loc>
   </url>
 </urlset>

@@ -1,0 +1,15 @@
+{
+  "list": [
+    {
+      "name": "node-spotify (discontinued)",
+      "url": "https://github.com/FrontierPsychiatrist/node-spotify",
+      "desc": "A Node.js wrapper around the `libspotify` C library" 
+    },
+    {
+      "name": "spring-oauth-example",
+      "url": "https://www.github.com/FrontierPsychiatrist/spring-oauth-example",
+      "desc": "An example Spring Security OAuth project"
+    }
+  ]
+}
+

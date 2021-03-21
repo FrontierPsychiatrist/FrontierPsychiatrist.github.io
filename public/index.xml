@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>FrontierPsychiatrist</title>
+    <link>http://frontierpsychiatrist.de/</link>
+    <description>Recent content on FrontierPsychiatrist</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 26 Apr 2017 00:00:00 +0000</lastBuildDate><atom:link href="http://frontierpsychiatrist.de/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>No more node-spotify</title>
+      <link>http://frontierpsychiatrist.de/posts/2017-04-26-no-more-node-spotify/</link>
+      <pubDate>Wed, 26 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://frontierpsychiatrist.de/posts/2017-04-26-no-more-node-spotify/</guid>
+      <description>Ceased development of node-spotify After my very enthusiastic last post about a living node-spotify now the time has come to announce that I will not develop node-spotify anymore.
+There are several reasons for this. The final one was an email by the &amp;ldquo;Spotify brand protection team&amp;rdquo; that I cannot use node-spotify.com. I understand that trademark laws are crazy and it is not really their fault. But it really annoyed me. The website has been taken down since then.</description>
+    </item>
+    
+    <item>
+      <title>node-spotify, it lives!</title>
+      <link>http://frontierpsychiatrist.de/posts/2016-06-11-node-spotify-lives/</link>
+      <pubDate>Sat, 11 Jun 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://frontierpsychiatrist.de/posts/2016-06-11-node-spotify-lives/</guid>
+      <description>It lives Finally, over 6 month after the issue has been reported on github, node-spotify compiles again on &amp;ldquo;recent&amp;rdquo; versions of NodeJS. The last working version was 0.12, but since two weeks ago it supports 0.10, 0.12, 4.x, 5.x and 6.x. This is thanks to an update of the Nan library. Sadly a major upgrade was needed that breaks a lot of usages itself, just to fix V8 compatibly.
+But wait there&amp;rsquo;s more!</description>
+    </item>
+    
+    <item>
+      <title>Migrating to Jekyll and github.io</title>
+      <link>http://frontierpsychiatrist.de/posts/2016-05-02-migrating-to-jekyll/</link>
+      <pubDate>Mon, 02 May 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://frontierpsychiatrist.de/posts/2016-05-02-migrating-to-jekyll/</guid>
+      <description>node-spotify So, node-spotify hasn&amp;rsquo;t been updated in a long time. It&amp;rsquo;s grown a lot over 100 stars on Github, which I&amp;rsquo;m very proud of.
+Since NodeJS version 4, I think that&amp;rsquo;s after the io.js merge it doesn&amp;rsquo;t compile anymore. I started migrating to a newer NaN version, but that&amp;rsquo;s a lot of compile errors to fix - and then I will have to see if it even runs.
+Recently some friendly fellows offered help over at github.</description>
+    </item>
+    
+    <item>
+      <title>syncthing, berlinpixels</title>
+      <link>http://frontierpsychiatrist.de/posts/2014-07-21-syncthing-berlinpixels/</link>
+      <pubDate>Mon, 21 Jul 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://frontierpsychiatrist.de/posts/2014-07-21-syncthing-berlinpixels/</guid>
+      <description>This post will be a little less technical. Unfortunately, still no news on node-spotify.
+syncthing Last year I switched back to Firefox from Chrome, a humble attempt for more privace (but I still use Google a lot, so&amp;hellip;). One time I stumbled upon syncthing and thought it would be a cool idea to have my own file syncing that does not reside on some US server.
+But I was too lazy to try it out.</description>
+    </item>
+    
+    <item>
+      <title>QTCreator, progress with audio</title>
+      <link>http://frontierpsychiatrist.de/posts/2014-06-07-qtcreator-progress-with-audio/</link>
+      <pubDate>Sat, 07 Jun 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://frontierpsychiatrist.de/posts/2014-06-07-qtcreator-progress-with-audio/</guid>
+      <description>QtCreator node-spotify development started with vim. At the time I didn&amp;rsquo;t really know vim and wanted to learn it, actually doing a project with it seemed as a good way. I even tried out a auto completion plugin (I don&amp;rsquo;t remember the name). At some point node-spotify became too large for me to handle it with vim. Maybe there are a lot of plugins out there which would have helped but I didn&amp;rsquo;t want to put too much time into it.</description>
+    </item>
+    
+    <item>
+      <title>Audio in node-spotify</title>
+      <link>http://frontierpsychiatrist.de/posts/2014-06-02-audio-in-node-spotify/</link>
+      <pubDate>Mon, 02 Jun 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://frontierpsychiatrist.de/posts/2014-06-02-audio-in-node-spotify/</guid>
+      <description>More audio options Last week I continued to work on the audio features of node-spotify. To provide audio data to Javascript with node.js buffers was easy. Not so easy was providing all of the data in the correct order. That was mainly my fault - once again reading documentation early would have been useful.
+All code examples are not real code.
+First try My first approach was to just send the audio data with a uv_async_t handle to the node.</description>
+    </item>
+    
+    <item>
+      <title>Turning 50</title>
+      <link>http://frontierpsychiatrist.de/posts/2014-05-24-turning-50/</link>
+      <pubDate>Sat, 24 May 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://frontierpsychiatrist.de/posts/2014-05-24-turning-50/</guid>
+      <description>Turning 50 This week, node-spotify turned 50 - 50 stars on github. This feels incredibly great, after all it&amp;rsquo;s my pet project which started with a lot of hacks thrown together. I dare you browsing old commits of node-spotify. But now people all over the world stumble upon it and apparently think its great. I didn&amp;rsquo;t do much advertising (one announcement on the NodeJS mailing list, two posts in small NodeJS subreddits).</description>
+    </item>
+    
+    <item>
+      <title>AWS summit, node-spotify</title>
+      <link>http://frontierpsychiatrist.de/posts/2014-05-17-aws-summit-node-spotify/</link>
+      <pubDate>Sat, 17 May 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://frontierpsychiatrist.de/posts/2014-05-17-aws-summit-node-spotify/</guid>
+      <description>AWS summit On thursday, I went to the AWS (Amazon Webservice) summit in Berlin. I don&amp;rsquo;t have much experience with AWS but thought it would be interesting to here some people talking about it. I will give you a short overview over the talks I attended.
+A quick note on the event as itself: It was hosted in the Postbahnhof near Ostbahnhof which really wasn&amp;rsquo;t fitted for so many people. One &amp;quot;room&amp;quot; was a tent next to the S-Bahn tracks, the speakers and microphones were setup in a way that had constant feedback.</description>
+    </item>
+    
+    <item>
+      <title>Ghost, callbacks, org-mode</title>
+      <link>http://frontierpsychiatrist.de/posts/2014-05-10-callbacks-org-mode/</link>
+      <pubDate>Sat, 10 May 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://frontierpsychiatrist.de/posts/2014-05-10-callbacks-org-mode/</guid>
+      <description>Ghost You probably noticed this blog is powered by Ghost. I tried it when it was all over HackerNews half a year (?) ago but it didn&amp;rsquo;t feel very polished (and was not announced as!). This week I felt like trying it again. Setup was really easy and it works just fine.
+So I guess I will try to write something here once a week. Mostly about programming stuff.
+Callbacks in node-spotify This week I hopefully gave playlist callbacks in node-spotify a final thought.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://frontierpsychiatrist.de/about_me/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://frontierpsychiatrist.de/about_me/</guid>
+      <description>Before working in the software industry I studied mathematics at TU Darmstadt. I already liked mathematics when I was in school and decided to continue with it. I specialized in Discrete Optimization and wrote my thesis about a modification of Branch &amp;amp; Bound for binary integer programs.
+After university I took a job in consulting. My company specialized on processes in the financial sector, but I worked in the data integration department of a bank for three years.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://frontierpsychiatrist.de/music/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://frontierpsychiatrist.de/music/</guid>
+      <description>Music I have been making music for a very long time now. Back then it was only the recorder. But I quickly progressed to the clarinet and kept playing that for almost 18 years. From 2005 - 2010 I was part of the Jugend Musik Ensemble in Frankfurt, a really great small amateur orchestra. In Berlin, after a year of doing almost nothing musically I started to play piano, teaching myself.</description>
+    </item>
+    
+  </channel>
+</rss>

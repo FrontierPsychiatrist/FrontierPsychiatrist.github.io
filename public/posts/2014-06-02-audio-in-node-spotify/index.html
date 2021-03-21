@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Audio in node-spotify | FrontierPsychiatrist</title>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Audio in node-spotify" />
+<meta property="og:description" content="More audio options Last week I continued to work on the audio features of node-spotify. To provide audio data to Javascript with node.js buffers was easy. Not so easy was providing all of the data in the correct order. That was mainly my fault - once again reading documentation early would have been useful.
+All code examples are not real code.
+First try My first approach was to just send the audio data with a uv_async_t handle to the node." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://frontierpsychiatrist.de/posts/2014-06-02-audio-in-node-spotify/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2014-06-02T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2014-06-02T00:00:00&#43;00:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Audio in node-spotify"/>
+<meta name="twitter:description" content="More audio options Last week I continued to work on the audio features of node-spotify. To provide audio data to Javascript with node.js buffers was easy. Not so easy was providing all of the data in the correct order. That was mainly my fault - once again reading documentation early would have been useful.
+All code examples are not real code.
+First try My first approach was to just send the audio data with a uv_async_t handle to the node."/>
+
+  
+  
+  
+  <link rel="stylesheet" href="http://frontierpsychiatrist.de/css/style-white.css">
+  
+  
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="http://frontierpsychiatrist.de/images/favicon.ico" />
+
+  
+  
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+  <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/posts">Blog</a></li>
+         
+        <li><a href="/music">Music</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li>
+          <a class="icon" href=" http://frontierpsychiatrist.de/posts/2014-05-24-turning-50/">
+            <i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i>
+          </a>
+        </li>
+        
+        
+        <li>
+          <a class="icon" href="http://frontierpsychiatrist.de/posts/2014-06-07-qtcreator-progress-with-audio/">
+            <i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i>
+          </a>
+        </li>
+        
+        <li>
+          <a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">
+            <i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i>
+          </a>
+        </li>
+        <li>
+          <a class="icon" href="#">
+            <i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i>
+          </a>
+        </li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      
+      <ul>
+  
+  
+    
+  
+  
+  <li>
+    <a class="icon" href="http://www.facebook.com/sharer.php?u=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-06-02-audio-in-node-spotify%2f">
+      <i class="fab fa-facebook " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://twitter.com/share?url=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-06-02-audio-in-node-spotify%2f&text=Audio%20in%20node-spotify">
+      <i class="fab fa-twitter " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-06-02-audio-in-node-spotify%2f&title=Audio%20in%20node-spotify">
+      <i class="fab fa-linkedin " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-06-02-audio-in-node-spotify%2f&is_video=false&description=Audio%20in%20node-spotify">
+      <i class="fab fa-pinterest " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="mailto:?subject=Audio%20in%20node-spotify&body=Check out this article: http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-06-02-audio-in-node-spotify%2f">
+      <i class="fas fa-envelope " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://getpocket.com/save?url=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-06-02-audio-in-node-spotify%2f&title=Audio%20in%20node-spotify">
+      <i class="fab fa-get-pocket " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://reddit.com/submit?url=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-06-02-audio-in-node-spotify%2f&title=Audio%20in%20node-spotify">
+      <i class="fab fa-reddit " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.stumbleupon.com/submit?url=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-06-02-audio-in-node-spotify%2f&title=Audio%20in%20node-spotify">
+      <i class="fab fa-stumbleupon " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://digg.com/submit?url=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-06-02-audio-in-node-spotify%2f&title=Audio%20in%20node-spotify">
+      <i class="fab fa-digg " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.tumblr.com/share/link?url=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-06-02-audio-in-node-spotify%2f&name=Audio%20in%20node-spotify&description=More%20audio%20options%20Last%20week%20I%20continued%20to%20work%20on%20the%20audio%20features%20of%20node-spotify.%20To%20provide%20audio%20data%20to%20Javascript%20with%20node.js%20buffers%20was%20easy.%20Not%20so%20easy%20was%20providing%20all%20of%20the%20data%20in%20the%20correct%20order.%20That%20was%20mainly%20my%20fault%20-%20once%20again%20reading%20documentation%20early%20would%20have%20been%20useful.%0aAll%20code%20examples%20are%20not%20real%20code.%0aFirst%20try%20My%20first%20approach%20was%20to%20just%20send%20the%20audio%20data%20with%20a%20uv_async_t%20handle%20to%20the%20node.">
+      <i class="fab fa-tumblr " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-06-02-audio-in-node-spotify%2f&t=Audio%20in%20node-spotify">
+      <i class="fab fa-hacker-news " aria-hidden="true"></i>
+    </a>
+  </li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#more-audio-options">More audio options</a>
+      <ul>
+        <li><a href="#first-try">First try</a></li>
+        <li><a href="#second-try">Second try</a></li>
+        <li><a href="#third-try">Third try</a></li>
+        <li><a href="#leaving-pthread-for-libuv">Leaving pthread for libuv</a></li>
+        <li><a href="#installation-flags-for-native-node-modules">Installation flags for native node modules</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+  </span>
+</div>
+
+
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+      <h1 class="posttitle" itemprop="name headline">
+        Audio in node-spotify
+      </h1>
+      <div class="meta">
+        
+        <div class="postdate">
+          
+          <time datetime="2014-06-02 00:00:00 &#43;0000 UTC" itemprop="datePublished">2014-06-02</time>
+          
+        </div>
+        
+        
+      </div>
+    </header>
+
+    <div class="content" itemprop="articleBody">
+      <h2 id="more-audio-options">More audio options</h2>
+<p>Last week I continued to work on the audio features of node-spotify. To provide audio data to Javascript with node.js buffers was easy. Not so easy was providing all of the data in the correct order. That was mainly my fault - once again reading documentation early would have been useful.</p>
+<p>All code examples are not real code.</p>
+<h3 id="first-try">First try</h3>
+<p>My first approach was to just send the audio data with a <code>uv_async_t</code> handle to the node.js main thread, wrap it in a buffer and call the user provided <code>musicDelivery</code> callback.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setup</span>() {
+  uv_async_init(uv_devault_loop(), musicDeliveryHandle, handleMusic);
+}
+
+<span style="color:#75715e">//Will be called in an internal spotify thread, no HandleScopes possible
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">music_delivery</span>(sp_session<span style="color:#f92672">*</span> session, sp_audioformat<span style="color:#f92672">*</span> format, <span style="color:#66d9ef">void</span><span style="color:#f92672">*</span> frames, <span style="color:#66d9ef">int</span> num_frames) {
+  size_t size <span style="color:#f92672">=</span> format<span style="color:#f92672">-&gt;</span>channels <span style="color:#f92672">*</span> num_frames <span style="color:#f92672">*</span> <span style="color:#66d9ef">sizeof</span>(int16_t);
+  audio_data<span style="color:#f92672">*</span> data <span style="color:#f92672">=</span> allocate_and_copy_data(size, num_frames, frames);
+  musicDeliveryHandle<span style="color:#f92672">-&gt;</span>data <span style="color:#f92672">=</span> (<span style="color:#66d9ef">void</span><span style="color:#f92672">*</span>)data;
+  uv_async_send(musicDeliveryHandle);
+}
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">handleMusic</span>(uv_async_t<span style="color:#f92672">*</span> handle, <span style="color:#66d9ef">int</span> status) {
+  node<span style="color:#f92672">::</span>Buffer buffer <span style="color:#f92672">=</span> node<span style="color:#f92672">::</span>Buffer<span style="color:#f92672">::</span>New(...);
+  callMusicDeliveryCallback(buffer<span style="color:#f92672">-&gt;</span>handle_);
+  free(handle<span style="color:#f92672">-&gt;</span>data);
+}
+</code></pre></div><p>When I used this to write the PCM data to a <a href="https://github.com/TooTallNate/node-speaker">node-speaker</a> instance the music was recognizable but very choppy. I tried a few things to circumvent that. I implemented a node.js readable <a href="http://nodejs.org/api/stream.html">stream</a> containing the data, didn&rsquo;t help. I buffered in Javascript - didn&rsquo;t help.</p>
+<h3 id="second-try">Second try</h3>
+<p>Then I took a look at <a href="https://github.com/Floby/node-libspotify">node-libspotify</a> that already has this feature. It buffers the audio data in C++ in a queue (same implementation like the libspotify examples) and calls the musicDelivery callback periodically (every 100ms), emptying the queue into it. I adapted it and it worked. Only at the beginning of a track there where a few chops, then it would catch up.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setup</span>() {
+  uv_timer_init(uv_default_loop(), musicTimer);
+  uv_timer_start(musicTimer, <span style="color:#f92672">&amp;</span>handleMusic, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">100</span>);
+}
+
+<span style="color:#75715e">//Will be called in an internal spotify thread, no HandleScopes possible
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">music_delivery</span>(sp_session<span style="color:#f92672">*</span> session, sp_audioformat<span style="color:#f92672">*</span> format, <span style="color:#66d9ef">void</span><span style="color:#f92672">*</span> frames, <span style="color:#66d9ef">int</span> num_frames) {
+  size_t size <span style="color:#f92672">=</span> format<span style="color:#f92672">-&gt;</span>channels <span style="color:#f92672">*</span> num_frames <span style="color:#f92672">*</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">int16_t</span>);
+  audio_data<span style="color:#f92672">*</span> data <span style="color:#f92672">=</span> allocate_and_copy_data(size, num_frames, frames);
+  push_data_to_queue(data);
+}
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">handleMusic</span>(uv_async_t<span style="color:#f92672">*</span> handle, <span style="color:#66d9ef">int</span> status) {
+  ...
+  <span style="color:#66d9ef">while</span>(data <span style="color:#f92672">=</span> audio_get()) {
+    node<span style="color:#f92672">::</span>Buffer buffer <span style="color:#f92672">=</span> node<span style="color:#f92672">::</span>Buffer<span style="color:#f92672">::</span>New(...);
+    callMusicDeliveryCallback(buffer<span style="color:#f92672">-&gt;</span>handle_);
+    queue_remove(data);
+    free(handle<span style="color:#f92672">-&gt;</span>data);
+  }
+}
+</code></pre></div><p>But I did not really like that approach. The timer to call the callback just feels&hellip; hacky. For a long time I didn&rsquo;t realize why this worked and my implementation not. My mistake was to assume that somehow my chunks were being modified which was not the case. It&rsquo;s very simple actually: <code>uv_async_send</code> is <em>not</em> a queue. The handles you send can be executed in any order and I believe even be dropped.</p>
+<p>When I wrote the audio data to a file I found a chunk that was in &quot;line&quot; 40 in the working file in &quot;line&quot; 200040 in the corrupt file written with my code. I then inserted a static counter for chunks in C++ and immediately saw that I was missing out a lot of chunks.</p>
+<h3 id="third-try">Third try</h3>
+<p>So I created a mixture of the two approaches: I buffer the data in C++, too, but will call the callback always when a certain amount of frames is available in the queue. And it works very good.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setup</span>() {
+  uv_async_init(uv_devault_loop(), musicDeliveryHandle, handleMusic);
+}
+
+<span style="color:#75715e">//Will be called in an internal spotify thread, no HandleScopes possible
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">music_delivery</span>(sp_session<span style="color:#f92672">*</span> session, sp_audioformat<span style="color:#f92672">*</span> format, <span style="color:#66d9ef">void</span><span style="color:#f92672">*</span> frames, <span style="color:#66d9ef">int</span> num_frames) {
+  size_t size <span style="color:#f92672">=</span> format<span style="color:#f92672">-&gt;</span>channels <span style="color:#f92672">*</span> num_frames <span style="color:#f92672">*</span> <span style="color:#66d9ef">sizeof</span>(int16_t);
+  audio_data<span style="color:#f92672">*</span> data <span style="color:#f92672">=</span> allocate_and_copy_data(size, num_frames, frames);
+  musicDeliveryHandle<span style="color:#f92672">-&gt;</span>data <span style="color:#f92672">=</span> (<span style="color:#66d9ef">void</span><span style="color:#f92672">*</span>)data;
+  push_data_to_queue(data);
+  <span style="color:#66d9ef">if</span>(queue_has_enough_data()) {
+    uv_async_send(musicDeliveryHandle);
+  }
+}
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">handleMusic</span>(uv_async_t<span style="color:#f92672">*</span> handle, <span style="color:#66d9ef">int</span> status) {
+  ...
+  <span style="color:#66d9ef">while</span>(data <span style="color:#f92672">=</span> audio_get()) {
+    node<span style="color:#f92672">::</span>Buffer buffer <span style="color:#f92672">=</span> node<span style="color:#f92672">::</span>Buffer<span style="color:#f92672">::</span>New(...);
+    callMusicDeliveryCallback(buffer<span style="color:#f92672">-&gt;</span>handle_);
+    queue_remove(data);
+    free(handle<span style="color:#f92672">-&gt;</span>data);
+  }
+}
+</code></pre></div><p>The implementation of <code>queue_has_enough_data</code> will maybe have a user settable value.</p>
+<p>I will just have to take care of a few more things like pausing, seeking and correct handling of the end of the track/stopping. But a within the next weeks it should be possible to get a stream of audio data from node-spotify.</p>
+<h3 id="leaving-pthread-for-libuv">Leaving pthread for libuv</h3>
+<p>While browsing to the audio code I also did quite a bit of refactoring. I replaced pthreads with libuv calls. Of course this will use pthreads in the end but it is more consistent. I also hopes this helps with a future Windows build.</p>
+<p>A lot of renaming was done since the libspotify guys thought it was a good idea to use very short variable names. I mean, <code>q</code> for <code>queue</code> is understandable when you are involved but I believe the four more characters bring more clarity then noise.</p>
+<h3 id="installation-flags-for-native-node-modules">Installation flags for native node modules</h3>
+<p>I have searched for a specific feature of npm/gyp for a long time - how can I enable the user to define installation flags that resolve in preprocessor <code>#define</code>s? The answer turned out to be very simple, but apparently my google-fu wasn&rsquo;t good enough. I found it when browsing the code of node-speaker. So I finally added a <code>--native_audio=true/false</code> flag to node-spotify that allows you to switch the ALSA/OpenAL backend totally of.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">npm install node-spotify --native_audio<span style="color:#f92672">=</span>false
+node-gyp build --release --native_audio<span style="color:#f92672">=</span>false
+</code></pre></div><p>How is it done? Have a look:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//binding.gyp
+</span><span style="color:#75715e"></span>{
+  <span style="color:#e6db74">&#34;targets&#34;</span><span style="color:#f92672">:</span> [{
+    <span style="color:#e6db74">&#34;name&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;node-spotify&#34;</span>,
+    <span style="color:#e6db74">&#34;variables&#34;</span><span style="color:#f92672">:</span> {
+      <span style="color:#e6db74">&#34;native_audio%&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;false&#34;</span>
+    },
+    <span style="color:#e6db74">&#34;conditions&#34;</span><span style="color:#f92672">:</span> [
+      [<span style="color:#e6db74">&#34;OS==&#39;mac&#39; and native_audio=&#39;true&#39;&#34;</span>, {
+        <span style="color:#e6db74">&#34;sources&#34;</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#34;src/audio/openal-audio.c&#34;</span>],
+        <span style="color:#e6db74">&#34;link_settings&#34;</span> <span style="color:#f92672">:</span> { <span style="color:#e6db74">&#34;libraries&#34;</span> <span style="color:#f92672">:</span> [<span style="color:#e6db74">&#34;-framework&#34;</span>, <span style="color:#e6db74">&#34;OpenAL&#34;</span>] },
+        <span style="color:#e6db74">&#34;defines&#34;</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#34;NODE_SPOTIFY_NATIVE_SOUND&#34;</span>]
+      }]
+    ]
+  }]
+}
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">//node-spotify.cc
+</span><span style="color:#75715e"></span>...
+<span style="color:#75715e">#ifdef NODE_SPOTIFY_NATIVE_SOUND
+</span><span style="color:#75715e"></span>    audio_init_native(application<span style="color:#f92672">-&gt;</span>fifo);
+<span style="color:#75715e">#endif
+</span></code></pre></div><p>The % seems to be important, I don&rsquo;t know why. But it doesn&rsquo;t work without it. So now I can put code belonging to native audio in <code>#ifdef</code>s in C/C++ and don&rsquo;t even compile them when the user doesn&rsquo;t need them. I guess this also means double the release builds for me&hellip;</p>
+
+    </div>
+  </article>
+
+  
+  
+
+
+
+
+
+  <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/posts">Blog</a></li>
+         
+          <li><a href="/music">Music</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#more-audio-options">More audio options</a>
+      <ul>
+        <li><a href="#first-try">First try</a></li>
+        <li><a href="#second-try">Second try</a></li>
+        <li><a href="#third-try">Third try</a></li>
+        <li><a href="#leaving-pthread-for-libuv">Leaving pthread for libuv</a></li>
+        <li><a href="#installation-flags-for-native-node-modules">Installation flags for native node modules</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      
+      <ul>
+  
+  
+    
+  
+  
+  <li>
+    <a class="icon" href="http://www.facebook.com/sharer.php?u=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-06-02-audio-in-node-spotify%2f">
+      <i class="fab fa-facebook fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://twitter.com/share?url=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-06-02-audio-in-node-spotify%2f&text=Audio%20in%20node-spotify">
+      <i class="fab fa-twitter fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-06-02-audio-in-node-spotify%2f&title=Audio%20in%20node-spotify">
+      <i class="fab fa-linkedin fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-06-02-audio-in-node-spotify%2f&is_video=false&description=Audio%20in%20node-spotify">
+      <i class="fab fa-pinterest fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="mailto:?subject=Audio%20in%20node-spotify&body=Check out this article: http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-06-02-audio-in-node-spotify%2f">
+      <i class="fas fa-envelope fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://getpocket.com/save?url=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-06-02-audio-in-node-spotify%2f&title=Audio%20in%20node-spotify">
+      <i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://reddit.com/submit?url=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-06-02-audio-in-node-spotify%2f&title=Audio%20in%20node-spotify">
+      <i class="fab fa-reddit fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.stumbleupon.com/submit?url=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-06-02-audio-in-node-spotify%2f&title=Audio%20in%20node-spotify">
+      <i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://digg.com/submit?url=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-06-02-audio-in-node-spotify%2f&title=Audio%20in%20node-spotify">
+      <i class="fab fa-digg fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.tumblr.com/share/link?url=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-06-02-audio-in-node-spotify%2f&name=Audio%20in%20node-spotify&description=More%20audio%20options%20Last%20week%20I%20continued%20to%20work%20on%20the%20audio%20features%20of%20node-spotify.%20To%20provide%20audio%20data%20to%20Javascript%20with%20node.js%20buffers%20was%20easy.%20Not%20so%20easy%20was%20providing%20all%20of%20the%20data%20in%20the%20correct%20order.%20That%20was%20mainly%20my%20fault%20-%20once%20again%20reading%20documentation%20early%20would%20have%20been%20useful.%0aAll%20code%20examples%20are%20not%20real%20code.%0aFirst%20try%20My%20first%20approach%20was%20to%20just%20send%20the%20audio%20data%20with%20a%20uv_async_t%20handle%20to%20the%20node.">
+      <i class="fab fa-tumblr fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-06-02-audio-in-node-spotify%2f&t=Audio%20in%20node-spotify">
+      <i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;">
+          <i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;">
+          <i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;">
+          <i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">
+          <i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+
+  <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2021  FrontierPsychiatrist 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/posts">Blog</a></li>
+         
+        <li><a href="/music">Music</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+
+
+
+</html>

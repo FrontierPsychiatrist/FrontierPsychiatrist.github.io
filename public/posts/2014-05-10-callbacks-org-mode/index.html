@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Ghost, callbacks, org-mode | FrontierPsychiatrist</title>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Ghost, callbacks, org-mode" />
+<meta property="og:description" content="Ghost You probably noticed this blog is powered by Ghost. I tried it when it was all over HackerNews half a year (?) ago but it didn&rsquo;t feel very polished (and was not announced as!). This week I felt like trying it again. Setup was really easy and it works just fine.
+So I guess I will try to write something here once a week. Mostly about programming stuff.
+Callbacks in node-spotify This week I hopefully gave playlist callbacks in node-spotify a final thought." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://frontierpsychiatrist.de/posts/2014-05-10-callbacks-org-mode/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2014-05-10T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2014-05-10T00:00:00&#43;00:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Ghost, callbacks, org-mode"/>
+<meta name="twitter:description" content="Ghost You probably noticed this blog is powered by Ghost. I tried it when it was all over HackerNews half a year (?) ago but it didn&rsquo;t feel very polished (and was not announced as!). This week I felt like trying it again. Setup was really easy and it works just fine.
+So I guess I will try to write something here once a week. Mostly about programming stuff.
+Callbacks in node-spotify This week I hopefully gave playlist callbacks in node-spotify a final thought."/>
+
+  
+  
+  
+  <link rel="stylesheet" href="http://frontierpsychiatrist.de/css/style-white.css">
+  
+  
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="http://frontierpsychiatrist.de/images/favicon.ico" />
+
+  
+  
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+  <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/posts">Blog</a></li>
+         
+        <li><a href="/music">Music</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li>
+          <a class="icon" href=" http://frontierpsychiatrist.de/about_me/">
+            <i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i>
+          </a>
+        </li>
+        
+        
+        <li>
+          <a class="icon" href="http://frontierpsychiatrist.de/posts/2014-05-17-aws-summit-node-spotify/">
+            <i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i>
+          </a>
+        </li>
+        
+        <li>
+          <a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">
+            <i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i>
+          </a>
+        </li>
+        <li>
+          <a class="icon" href="#">
+            <i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i>
+          </a>
+        </li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      
+      <ul>
+  
+  
+    
+  
+  
+  <li>
+    <a class="icon" href="http://www.facebook.com/sharer.php?u=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-05-10-callbacks-org-mode%2f">
+      <i class="fab fa-facebook " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://twitter.com/share?url=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-05-10-callbacks-org-mode%2f&text=Ghost%2c%20callbacks%2c%20org-mode">
+      <i class="fab fa-twitter " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-05-10-callbacks-org-mode%2f&title=Ghost%2c%20callbacks%2c%20org-mode">
+      <i class="fab fa-linkedin " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-05-10-callbacks-org-mode%2f&is_video=false&description=Ghost%2c%20callbacks%2c%20org-mode">
+      <i class="fab fa-pinterest " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="mailto:?subject=Ghost%2c%20callbacks%2c%20org-mode&body=Check out this article: http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-05-10-callbacks-org-mode%2f">
+      <i class="fas fa-envelope " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://getpocket.com/save?url=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-05-10-callbacks-org-mode%2f&title=Ghost%2c%20callbacks%2c%20org-mode">
+      <i class="fab fa-get-pocket " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://reddit.com/submit?url=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-05-10-callbacks-org-mode%2f&title=Ghost%2c%20callbacks%2c%20org-mode">
+      <i class="fab fa-reddit " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.stumbleupon.com/submit?url=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-05-10-callbacks-org-mode%2f&title=Ghost%2c%20callbacks%2c%20org-mode">
+      <i class="fab fa-stumbleupon " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://digg.com/submit?url=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-05-10-callbacks-org-mode%2f&title=Ghost%2c%20callbacks%2c%20org-mode">
+      <i class="fab fa-digg " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.tumblr.com/share/link?url=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-05-10-callbacks-org-mode%2f&name=Ghost%2c%20callbacks%2c%20org-mode&description=Ghost%20You%20probably%20noticed%20this%20blog%20is%20powered%20by%20Ghost.%20I%20tried%20it%20when%20it%20was%20all%20over%20HackerNews%20half%20a%20year%20%28%3f%29%20ago%20but%20it%20didn%26rsquo%3bt%20feel%20very%20polished%20%28and%20was%20not%20announced%20as%21%29.%20This%20week%20I%20felt%20like%20trying%20it%20again.%20Setup%20was%20really%20easy%20and%20it%20works%20just%20fine.%0aSo%20I%20guess%20I%20will%20try%20to%20write%20something%20here%20once%20a%20week.%20Mostly%20about%20programming%20stuff.%0aCallbacks%20in%20node-spotify%20This%20week%20I%20hopefully%20gave%20playlist%20callbacks%20in%20node-spotify%20a%20final%20thought.">
+      <i class="fab fa-tumblr " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-05-10-callbacks-org-mode%2f&t=Ghost%2c%20callbacks%2c%20org-mode">
+      <i class="fab fa-hacker-news " aria-hidden="true"></i>
+    </a>
+  </li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#ghost">Ghost</a></li>
+    <li><a href="#callbacks-in-node-spotify">Callbacks in node-spotify</a></li>
+    <li><a href="#org-mode">Org Mode</a></li>
+  </ul>
+</nav>
+    </div>
+  </span>
+</div>
+
+
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+      <h1 class="posttitle" itemprop="name headline">
+        Ghost, callbacks, org-mode
+      </h1>
+      <div class="meta">
+        
+        <div class="postdate">
+          
+          <time datetime="2014-05-10 00:00:00 &#43;0000 UTC" itemprop="datePublished">2014-05-10</time>
+          
+        </div>
+        
+        
+      </div>
+    </header>
+
+    <div class="content" itemprop="articleBody">
+      <h2 id="ghost">Ghost</h2>
+<p>You probably noticed this blog is powered by <a href="https://github.com/TryGhost/Ghost">Ghost</a>. I tried it when it was all over HackerNews half a year (?) ago but it didn&rsquo;t feel very polished (and was not announced as!). This week I felt like trying it again. Setup was really easy and it works just fine.</p>
+<p>So I guess I will try to write something here once a week. Mostly about programming stuff.</p>
+<h2 id="callbacks-in-node-spotify">Callbacks in node-spotify</h2>
+<p>This week I hopefully gave playlist callbacks in <a href="http://www.node-spotify.com/">node-spotify</a> a final thought.
+The current situation is: the user can access playlists and attach a callback like so</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">playlists</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">spotify</span>.<span style="color:#a6e22e">playlistContainer</span>.<span style="color:#a6e22e">getPlaylists</span>();
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">playlist</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">playlists</span>[<span style="color:#ae81ff">0</span>];
+<span style="color:#a6e22e">playlist</span>.<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#39;playlist_renamed&#39;</span>, <span style="color:#a6e22e">fn</span>);
+</code></pre></div><p>Problem: If you call <code>getPlaylists()</code> twice you will get two different playlist arrays that contain new playlists.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">playlists</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">id</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+<span style="color:#a6e22e">playlists</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">spotify</span>.<span style="color:#a6e22e">playlistContainer</span>.<span style="color:#a6e22e">getPlaylists</span>();
+<span style="color:#a6e22e">playlists</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">id</span>; <span style="color:#75715e">//undefined
+</span></code></pre></div><p>I decided to save a relationsship of libspotify&rsquo;s <code>sp_playlist</code> and the V8 objects.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">std<span style="color:#f92672">::</span>map<span style="color:#f92672">&lt;</span>sp_playlist<span style="color:#f92672">*</span>, V8Wrapped<span style="color:#f92672">*&gt;</span> objectMapping;
+</code></pre></div><p>Otherwise I wouldn&rsquo;t know which V8 object to use in a callback. Take <code>tracks_added</code> for an example:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">void</span>(<span style="color:#f92672">*</span>tracks_added)(sp_playlist <span style="color:#f92672">*</span>pl, sp_track <span style="color:#f92672">*</span><span style="color:#66d9ef">const</span> <span style="color:#f92672">*</span>tracks, <span style="color:#66d9ef">int</span> num_tracks, <span style="color:#66d9ef">int</span> position, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>userdata)
+</code></pre></div><p>I want to provide</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">tracksAdded</span>(<span style="color:#a6e22e">playlist</span>, <span style="color:#a6e22e">tracks</span>[])
+</code></pre></div><p>in Javascript, so I need to know how to get the V8 wrapped <code>sp_playlist</code>. With the <code>objectMapping</code> map i can access it.</p>
+<p>Bu this comes with the cost of added complexity in the C++ code. Also if the user gets the playlists twice with this approach only the <em>last</em> accessed playlist will be used in the callbacks!</p>
+<p>I have come to the conclusion that this is actually more counterintuitive than just attaching the callbacks to the JavaScript object and providing it as the userdata in the callback. So I will change the node-spotify implementation to go that way.</p>
+<p>This will put a little more work to users of node-spotify: You have to track your playlists more carefully. If a playlists objects goes out of scope it is advisefully to unregister all callbacks, otherwise you have to wait for the garbage collector to kick in and the callbacks to be unregistered in the destructor.
+Another nice thing that I can do better with this approach is to register the callbacks in libspotify only when the user registers them in node-spotify. Currently all playlist callbacks will be registered for every playlist and it will be checked in the callback function itself if the user had interest in this specific callback.</p>
+<h2 id="org-mode">Org Mode</h2>
+<p>When coming to vim and emacs I always used vim. I started node-spotify completely in vim but nowadays it&rsquo;s only my &quot;console text-editor&quot;, not everyday work editor.</p>
+<p>I always wanted to learn a bit of emacs to see how it works. I read about <a href="http://orgmode.org/">Org Mode</a> sometime last year and thought it sounded really cool. This week I finally came around to give it a try.
+First I have to say that it&rsquo;s really a pain to get emacs working on OSX, just because of the meta key. Alt does not work. If you switch alt to meta in Terminal.app you will lose the ability to input ~ which is not viable.</p>
+<p>So I started with Emacs.app which runs in Cocoa and uses the alt key as meta while still maintaining the ability to use the special characters that are accessed via alt. But - copy-paste via cmd+c, cmd+v does not work. It also stops responding if I close a file with changes and the &quot;do you want to save&quot;-dialog comes up.</p>
+<p>Nonetheless - Org Mode turned out to be really nice. I probably only scratched its surface with some todos and formatting. The concept of a plain/human readable text file that can be parsed as an agenda file by a text editor is really to my liking.</p>
+
+    </div>
+  </article>
+
+  
+  
+
+
+
+
+
+  <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/posts">Blog</a></li>
+         
+          <li><a href="/music">Music</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#ghost">Ghost</a></li>
+    <li><a href="#callbacks-in-node-spotify">Callbacks in node-spotify</a></li>
+    <li><a href="#org-mode">Org Mode</a></li>
+  </ul>
+</nav>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      
+      <ul>
+  
+  
+    
+  
+  
+  <li>
+    <a class="icon" href="http://www.facebook.com/sharer.php?u=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-05-10-callbacks-org-mode%2f">
+      <i class="fab fa-facebook fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://twitter.com/share?url=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-05-10-callbacks-org-mode%2f&text=Ghost%2c%20callbacks%2c%20org-mode">
+      <i class="fab fa-twitter fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-05-10-callbacks-org-mode%2f&title=Ghost%2c%20callbacks%2c%20org-mode">
+      <i class="fab fa-linkedin fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-05-10-callbacks-org-mode%2f&is_video=false&description=Ghost%2c%20callbacks%2c%20org-mode">
+      <i class="fab fa-pinterest fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="mailto:?subject=Ghost%2c%20callbacks%2c%20org-mode&body=Check out this article: http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-05-10-callbacks-org-mode%2f">
+      <i class="fas fa-envelope fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://getpocket.com/save?url=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-05-10-callbacks-org-mode%2f&title=Ghost%2c%20callbacks%2c%20org-mode">
+      <i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://reddit.com/submit?url=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-05-10-callbacks-org-mode%2f&title=Ghost%2c%20callbacks%2c%20org-mode">
+      <i class="fab fa-reddit fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.stumbleupon.com/submit?url=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-05-10-callbacks-org-mode%2f&title=Ghost%2c%20callbacks%2c%20org-mode">
+      <i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://digg.com/submit?url=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-05-10-callbacks-org-mode%2f&title=Ghost%2c%20callbacks%2c%20org-mode">
+      <i class="fab fa-digg fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.tumblr.com/share/link?url=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-05-10-callbacks-org-mode%2f&name=Ghost%2c%20callbacks%2c%20org-mode&description=Ghost%20You%20probably%20noticed%20this%20blog%20is%20powered%20by%20Ghost.%20I%20tried%20it%20when%20it%20was%20all%20over%20HackerNews%20half%20a%20year%20%28%3f%29%20ago%20but%20it%20didn%26rsquo%3bt%20feel%20very%20polished%20%28and%20was%20not%20announced%20as%21%29.%20This%20week%20I%20felt%20like%20trying%20it%20again.%20Setup%20was%20really%20easy%20and%20it%20works%20just%20fine.%0aSo%20I%20guess%20I%20will%20try%20to%20write%20something%20here%20once%20a%20week.%20Mostly%20about%20programming%20stuff.%0aCallbacks%20in%20node-spotify%20This%20week%20I%20hopefully%20gave%20playlist%20callbacks%20in%20node-spotify%20a%20final%20thought.">
+      <i class="fab fa-tumblr fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=http%3a%2f%2ffrontierpsychiatrist.de%2fposts%2f2014-05-10-callbacks-org-mode%2f&t=Ghost%2c%20callbacks%2c%20org-mode">
+      <i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;">
+          <i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;">
+          <i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;">
+          <i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">
+          <i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+
+  <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2021  FrontierPsychiatrist 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/posts">Blog</a></li>
+         
+        <li><a href="/music">Music</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+
+
+
+</html>

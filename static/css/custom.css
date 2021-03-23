@@ -1,0 +1,6 @@
+/* So the image on the main page is centered */
+section#about {
+  display: flex;
+  flex-direction: column;
+}
+
